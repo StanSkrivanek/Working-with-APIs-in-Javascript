@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Fetch and Graph CSV formatted data from NASA</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+  </head>
+  <body>
+    <canvas id="chart" width="800" height="400"></canvas>
+    <script>
+      // const x_labels = [];
+      // const y_temps = [];
+      async function createChart() {
+        const data = await getData();
+        const ctx = document.getElementById("chart");
+
+        const myChart = new Chart(ctx, {
+          type: "line",
+          data: {
+            labels: data.xs,
+            datasets: [
+              {
+                label: "Global Average Temperature",
+                data: data.ys,
+                fill: false,
+                borderColor: "rgba(22, 99, 132, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    // Include a dollar sign in the ticks
+                    callback: function (value, index, values) {
+                      return value + "º";
+                    },
+                  },
+                },
+              ],
+            },
+          },
+        });
+      }
+
+      async function getData() {
+        const xs = [];
+        const ys = [];
+        const response = await fetch("data.csv");
+        const data = await response.text();
+        const table = data.split("\n");
+        const onlyUsefulData = table.slice(1);
+
+        onlyUsefulData.forEach((row) => {
+          const columns = row.split(",");
+          const year = columns[0];
+          xs.push(year);
+          const temp = columns[1];
+          // convert string to number with "parseFloat" and add average temperature 14ºC
+          ys.push(parseFloat(temp) + 14);
+        });
+        return { xs, ys };
+      }
+
+      createChart();
+    </script>
+    <!-- https://www.youtube.com/watch?v=RfMkdvN-23o&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=4 -->
+  </body>
+</html>

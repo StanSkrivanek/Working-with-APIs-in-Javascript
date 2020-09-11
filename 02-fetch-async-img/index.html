@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Data / API 2</title>
+  </head>
+  <body>
+    <img src="" id="blm" width="300" />
+
+    <script>
+      async function getData() {
+        //  await for result of FETCH and store this result in variable "response"
+        const response = await fetch("blm.png");
+        // then get 'blob'(img)
+        const blob = await response.blob();
+        console.log(blob);
+        document.getElementById("blm").src = URL.createObjectURL(blob);
+      }
+
+      
+      getData()
+      // because async function return promise we can add THEN to eg. write success message
+      .then(
+        response =>{
+          console.log('object is loaded and shown')
+        }
+      )
+      // and of course we can add function to catch any error in function
+      .catch((err) => {
+        console.error(err);
+      });
+    </script>
+    <!-- https://www.youtube.com/watch?v=tc8DU14qX6I&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&t=0s -->
+  </body>
+</html>

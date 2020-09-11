@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Data / API 1</title>
+  </head>
+  <body>
+    <img src="" id="blm" width="300" />
+
+    <script>
+      console.log("about to fetch an image");
+      //1.fetch data from source path (in this case img) [it return promise]
+      fetch("blm.png")
+        .then((response) => {
+          // THEN take this promise and resolve this data request in a BLOB format (because it is IMG) [it will AGAIN return a PROMISE]
+          console.log(response);
+          return response.blob();
+        })
+        .then(
+          // THEN look on resolved promise (of data in BLOB format) and return data in a BLOB
+          (blob) => {
+            console.log(blob);
+            document.getElementById("blm").src = URL.createObjectURL(blob);
+          }
+        )
+        .catch((err) => {
+          console.error();
+        });
+    </script>
+    <!-- https://www.youtube.com/watch?v=tc8DU14qX6I&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&t=0s -->
+  </body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Fetch and Graph CSV formatted data from NASA</title>
+  </head>
+  <body>
+    <script>
+      async function getData() {
+        const response = await fetch("testData.csv");
+        const data = await response.text();
+        // console.log(data);
+
+        // PARSE (split to usable form) text data manually by using "split" function
+        // 1. separate each ROW
+        const table = data.split("\n");
+        // console.log(rows);
+        // remove first row (not useful data) by using "slice" function
+        // give me ONLY data from array that have index 1 and above
+        const onlyUsefulData = table.slice(1);
+        // console.log(onlyUsefulData); // no data with index '0'
+        // split each element in Array based on comma (',')
+        onlyUsefulData.forEach((row) => {
+          const columns = row.split(",");
+          // console.log(row); // array of single items from row
+          const year = columns[0];
+          const temp = columns[1];
+          console.log(year, temp)
+   
+        });
+      }
+
+      getData();
+    </script>
+    <!-- https://www.youtube.com/watch?v=RfMkdvN-23o&list=PLRqwX-V7Uu6YxDKpFzf_2D84p0cyk4T7X&index=4 -->
+  </body>
+</html>

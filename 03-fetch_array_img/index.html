@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Fetch multiple images</title>
+  </head>
+  <body>
+    <div id="output"></div>
+
+    <script>
+      const imgArr = ["img/01.png", "img/02.png", "img/03.png"];
+
+      async function getImages(imgArr,cb) {
+        const outputEl = document.getElementById("output");
+
+
+        for (let image of imgArr) {
+          console.log(image);
+          const response = await fetch(image);
+          const blob = await response.blob();
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(blob);
+          img.width = "200";
+          img.style.padding = `10px`;
+          outputEl.append(img);
+        }
+      }
+      getImages(imgArr);
+    </script>
+  </body>
+</html>
