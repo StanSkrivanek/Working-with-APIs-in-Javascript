@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Fetch JSON from API</title>
+  </head>
+  <body>
+    <div id="output"></div>
+
+    <script>
+      const output = document.querySelector("#output");
+      const endpoint = "data.json";
+      fetch(endpoint) //fetch return a promise
+        .then((res) => res.json()) // catch first promise with `then` and convert response to JSON format. This will return SECOND promise
+        .then((data) => {
+          console.log(data);
+          output.innerHTML = `
+          <h1>${data.first_name} ${data.second_name} is ${data.age} years old</h1>
+          `
+        }); // catch SECOND promise that give us the data
+    </script>
+  </body>
+</html>
