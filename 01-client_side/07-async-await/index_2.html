@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Fetch JSON from API</title>
+  </head>
+  <body>
+    <img src="" />
+    <script>
+      const output = document.querySelector("img");
+      const trigger = document.getElementById("btn");
+      const api_endpoint = "https://picsum.photos/460/320.webp";
+
+      async function changeImage() {
+        const response = await fetch(api_endpoint).catch((err) => {
+        console.error(err);
+      });
+        const blob = await response.blob();
+
+        output.src = URL.createObjectURL(blob);
+      }
+
+      setInterval(changeImage, 2000)
+    </script>
+  </body>
+</html>
