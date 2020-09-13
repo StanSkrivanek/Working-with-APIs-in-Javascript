@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+    <title>Fetch JSON from API</title>
+  </head>
+  <body>
+    <img src="" /><br />
+    <button id="btn">click me</button>
+    <script>
+      const output = document.querySelector("img");
+      const trigger = document.getElementById("btn");
+      const endpoint = "https://picsum.photos/460/320.webp";
+
+      function changeImage() {
+        fetch(endpoint)
+          .then((response) => {
+            return response.blob();
+          })
+          .then((blob) => {
+            output.src = URL.createObjectURL(blob);
+          });
+      }
+      // changeImage();
+      trigger.addEventListener("click", changeImage);
+    </script>
+  </body>
+</html>
+
